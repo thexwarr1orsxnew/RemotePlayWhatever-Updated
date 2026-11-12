@@ -31,8 +31,17 @@ bool RemotePlayInviteHandler::SendInvite(CSteamID invitee)
 
     if (gameID.IsSteamApp() && gameID.AppID() != m_nonsteamAppID)
     {
-        bool r = GClientContext()->RemoteClientManager()->BCreateRemotePlayInviteAndSession(rppInvitee, gameID.AppID());
-        fprintf(stderr, "RPW: BCreateRemotePlayInviteAndSession returned %d (steamApp=%d)\n", (int)r, gameID.AppID());
+        bool r = false;
+        if (GClientContext()->SteamRemotePlay())
+        {
+            r = GClientContext()->SteamRemotePlay()->BSendRemotePlayTogetherInvite(invitee);
+            fprintf(stderr, "RPW: BSendRemotePlayTogetherInvite returned %d\n", (int)r);
+        }
+        if (!r)
+        {
+            r = GClientContext()->RemoteClientManager()->BCreateRemotePlayInviteAndSession(rppInvitee, gameID.AppID());
+            fprintf(stderr, "RPW: BCreateRemotePlayInviteAndSession returned %d (steamApp=%d)\n", (int)r, gameID.AppID());
+        }
         if (!r) return false;
     }
     else
