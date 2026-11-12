@@ -42,6 +42,12 @@ bool RemotePlayInviteHandler::SendInvite(CSteamID invitee)
             r = GClientContext()->RemoteClientManager()->BCreateRemotePlayInviteAndSession(rppInvitee, gameID.AppID());
             fprintf(stderr, "RPW: BCreateRemotePlayInviteAndSession returned %d (steamApp=%d)\n", (int)r, gameID.AppID());
         }
+        if (!r && invitee.IsValid() && GClientContext()->ClientFriends())
+        {
+            fprintf(stderr, "RPW: trying ActivateGameOverlayRemotePlayTogetherInviteDialog\n");
+            GClientContext()->ClientFriends()->ActivateGameOverlayRemotePlayTogetherInviteDialog(invitee);
+            r = true;
+        }
         if (!r) return false;
     }
     else

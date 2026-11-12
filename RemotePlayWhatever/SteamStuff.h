@@ -14,6 +14,7 @@ public:
     ISteamFriends015* SteamFriends();
     ISteamUtils009* SteamUtils();
     ISteamRemotePlay001* SteamRemotePlay();
+    IClientFriends* ClientFriends();
 
     IClientRemoteClientManager* RemoteClientManager();
 
@@ -33,6 +34,7 @@ private:
 
     IClientEngine* m_pClientEngine;
     IClientRemoteClientManager* m_pClientRemoteManager;
+    IClientFriends* m_pClientFriends;
     
     bool m_ShuttingDown;
     bool m_Initialized;

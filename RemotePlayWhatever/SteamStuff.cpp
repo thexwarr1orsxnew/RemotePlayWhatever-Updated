@@ -11,6 +11,7 @@ ClientContext::ClientContext():
     m_pSteamClient(nullptr),
     m_pClientEngine(nullptr),
     m_pClientRemoteManager(nullptr),
+    m_pClientFriends(nullptr),
     m_ShuttingDown(false)
 {
 }
@@ -85,6 +86,9 @@ bool ClientContext::Init()
         return false;
     }
 
+    m_pClientFriends = m_pClientEngine->GetIClientFriends(m_hUser, m_hPipe);
+
+
     return m_Initialized = true;
 }
 
@@ -128,6 +132,11 @@ ISteamUtils009 *ClientContext::SteamUtils()
 ISteamRemotePlay001* ClientContext::SteamRemotePlay()
 {
     return m_pSteamRemotePlay;
+}
+
+IClientFriends* ClientContext::ClientFriends()
+{
+    return m_pClientFriends;
 }
 
 void ClientContext::RunCallbacks()
