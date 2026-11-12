@@ -46,7 +46,7 @@ bool RemotePlayInviteHandler::SendInvite(CSteamID invitee)
         {
             fprintf(stderr, "RPW: trying ActivateGameOverlayRemotePlayTogetherInviteDialog\n");
             GClientContext()->ClientFriends()->ActivateGameOverlayRemotePlayTogetherInviteDialog(invitee);
-            r = true;
+            // Do not assume success: vtable offsets may be wrong on current Steam client.
         }
         if (!r) return false;
     }
