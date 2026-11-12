@@ -67,6 +67,12 @@ bool ClientContext::Init()
         return false;
     }
 
+    m_pSteamRemotePlay = (ISteamRemotePlay001*)m_pSteamClient->GetISteamRemotePlay(m_hUser, m_hPipe, STEAMREMOTEPLAY_INTERFACE_VERSION);
+    if(!m_pSteamRemotePlay)
+    {
+        return false;
+    }
+
     m_pClientEngine = (IClientEngine*)SteamInternal_CreateInterface(CLIENTENGINE_INTERFACE_VERSION);
     if (!m_pClientEngine)
     {
@@ -117,6 +123,11 @@ ISteamFriends015* ClientContext::SteamFriends()
 ISteamUtils009 *ClientContext::SteamUtils()
 {
     return m_pSteamUtils;
+}
+
+ISteamRemotePlay001* ClientContext::SteamRemotePlay()
+{
+    return m_pSteamRemotePlay;
 }
 
 void ClientContext::RunCallbacks()

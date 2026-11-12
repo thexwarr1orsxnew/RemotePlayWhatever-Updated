@@ -30,7 +30,18 @@ void RemotePlayInviteHandler::SendInvite(CSteamID invitee)
 
     if (gameID.IsSteamApp() && gameID.AppID() != m_nonsteamAppID)
     {
-        GClientContext()->RemoteClientManager()->BCreateRemotePlayInviteAndSession(rppInvitee, gameID.AppID());
+        // Prefer the public, documented Remote Play API for Steam games.
+        // It is more stable across Steam client updates than the internal
+        // client manager interface.
+        bool ok = false;
+        if (GClientContext()->SteamRemotePlay())
+        {
+            ok = GClientContext()->SteamRemotePlay()->BSendRemotePlayTogetherInvite(invitee);
+        }
+        if (!ok)
+        {
+            GClientContext()->RemoteClientManager()->BCreateRemotePlayInviteAndSession(rppInvitee, gameID.AppID());
+        }
     }
     else
     {
