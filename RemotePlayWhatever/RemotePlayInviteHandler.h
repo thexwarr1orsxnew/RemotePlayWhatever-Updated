@@ -9,7 +9,7 @@ public:
     RemotePlayInviteHandler();
     virtual ~RemotePlayInviteHandler() {}
 
-    void SendInvite(CSteamID invitee);
+    bool SendInvite(CSteamID invitee);
     void CancelInvite(CSteamID invitee, uint32 guestID);
 
     void SetNonSteamAppID(AppId_t appID);

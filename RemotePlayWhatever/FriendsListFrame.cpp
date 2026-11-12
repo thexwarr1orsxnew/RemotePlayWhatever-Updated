@@ -199,7 +199,15 @@ void FriendsListFrame::OnFriendPanelClick(wxCommandEvent &event)
     wxMessageDialog* dlg = new wxMessageDialog(this, "Send remote play invite to " + sender->GetDisplayPersonaName()  + "?", "Confirm Remote Play Invite", wxOK | wxCANCEL);
     if(dlg->ShowModal() == wxID_OK)
     {
-        m_pRemoteInvite->SendInvite(invitee);
+        bool r = m_pRemoteInvite->SendInvite(invitee);
+        if (r)
+        {
+            wxMessageBox("Invite request sent", "Remote Play Whatever", wxOK | wxICON_INFORMATION);
+        }
+        else
+        {
+            wxMessageBox("Failed to create remote play session", "Remote Play Whatever", wxOK | wxICON_ERROR);
+        }
     }
     delete dlg;
 }
@@ -219,7 +227,11 @@ void FriendsListFrame::OnGuestPanelClick(wxCommandEvent &event)
     wxMessageDialog* dlg = new wxMessageDialog(this, "Create guest invite link?", "Confirm Remote Play Invite", wxOK | wxCANCEL);
     if(dlg->ShowModal() == wxID_OK)
     {
-        m_pRemoteInvite->SendInvite(CSteamID(0, k_EUniversePublic, k_EAccountTypeIndividual));
+        bool r = m_pRemoteInvite->SendInvite(CSteamID(0, k_EUniversePublic, k_EAccountTypeIndividual));
+        if (!r)
+        {
+            wxMessageBox("Failed to create guest invite link", "Remote Play Whatever", wxOK | wxICON_ERROR);
+        }
     }
     delete dlg;
 }

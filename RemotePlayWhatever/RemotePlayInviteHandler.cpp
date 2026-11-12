@@ -16,13 +16,14 @@ AppId_t RemotePlayInviteHandler::GetNonSteamAppID()
     return m_nonsteamAppID;
 }
 
-void RemotePlayInviteHandler::SendInvite(CSteamID invitee)
+bool RemotePlayInviteHandler::SendInvite(CSteamID invitee)
 {
     CGameID gameID = GetRunningGameID();
 
     if (!gameID.IsValid())
     {
-        return;
+        fprintf(stderr, "RPW: invalid game id\n");
+        return false;
     }
 
     RemotePlayPlayer_t rppInvitee = { invitee, m_remoteGuestID, m_groupID, 0, 0, 0 };
@@ -30,7 +31,9 @@ void RemotePlayInviteHandler::SendInvite(CSteamID invitee)
 
     if (gameID.IsSteamApp() && gameID.AppID() != m_nonsteamAppID)
     {
-        GClientContext()->RemoteClientManager()->BCreateRemotePlayInviteAndSession(rppInvitee, gameID.AppID());
+        bool r = GClientContext()->RemoteClientManager()->BCreateRemotePlayInviteAndSession(rppInvitee, gameID.AppID());
+        fprintf(stderr, "RPW: BCreateRemotePlayInviteAndSession returned %d (steamApp=%d)\n", (int)r, gameID.AppID());
+        if (!r) return false;
     }
     else
     {
@@ -38,8 +41,11 @@ void RemotePlayInviteHandler::SendInvite(CSteamID invitee)
 
         m_enabledDesktopStreaming = true;
 
-        GClientContext()->RemoteClientManager()->BCreateRemotePlayInviteAndSession(rppInvitee, m_nonsteamAppID);
+        bool r = GClientContext()->RemoteClientManager()->BCreateRemotePlayInviteAndSession(rppInvitee, m_nonsteamAppID);
+        fprintf(stderr, "RPW: BCreateRemotePlayInviteAndSession (nonsteam) returned %d\n", (int)r);
+        if (!r) return false;
     }
+    return true;
 }
 
 void RemotePlayInviteHandler::CancelInvite(CSteamID invitee, uint32 guestID)
