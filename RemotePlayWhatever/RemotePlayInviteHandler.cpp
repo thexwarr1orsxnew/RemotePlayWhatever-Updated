@@ -5,7 +5,7 @@ RemotePlayInviteHandler::RemotePlayInviteHandler() :
     m_enabledDesktopStreaming(false),
     m_remoteGuestID(1),
     m_nonsteamAppID(0),
-    m_groupID(1),
+    m_groupID(0),
     m_remoteInviteResultCb(this, &RemotePlayInviteHandler::OnRemotePlayInviteResult),
     m_remoteStopCb(this, &RemotePlayInviteHandler::OnRemotePlayStop)
 {
