@@ -1,6 +1,6 @@
->[!CAUTION]
-> This application does not function as intended due to breaking changes in the latest Steam Client releases! ( see: https://github.com/m4dEngi/RemotePlayWhatever/issues/285 https://github.com/m4dEngi/RemotePlayWhatever/issues/279 )
-> Consider using an [alternative](#alternatives)!
+>[!NOTE]
+> This fork (`thexwarr1orsxnew/RemotePlayWhatever-Updated`) updates the bundled `open-steamworks` interfaces to match the current stable Steam client release, restoring Remote Play Together invites (including non-Steam games). It is based on the original `m4dEngi/RemotePlayWhatever` project.
+
 
 
 # RemotePlayWhatever
@@ -94,8 +94,11 @@ All commands should be executed in a `Developer Command Prompt for VS`.
 ## Contributing
 Contributions are welcome! If you find a bug or have a feature request, please open an issue.
 
-## Acknowledgements
-- Original idea and initial testing by @Jondycz
+## Credits / Ownership
+- Original project and idea: `m4dEngi/RemotePlayWhatever` (original author/maintainer).
+- Original idea and initial testing by @Jondycz.
+- This updated fork and maintenance: `thexwarr1orsxnew` (https://github.com/thexwarr1orsxnew/RemotePlayWhatever-Updated).
+- Steam client interface bindings provided by the `open-steamworks` project (m4dEngi fork).
 
 ## Alternatives
 Steam
